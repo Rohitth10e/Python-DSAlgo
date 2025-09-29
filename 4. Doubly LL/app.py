@@ -32,10 +32,26 @@ class DoublyLinkedList:
             node.prev = self.tail
             self.tail = node
         self.length+=1
+        return True
+    
+    def pop(self):
+        if self.is_empty():
+            return False
+        
+        if self.length == 1:
+            self.head = None
+            self.tail = None
+        else:
+            temp = self.tail
+            self.tail = self.tail.prev
+            self.tail.next = None
+        self.length -= 1
+        return temp
 
 
 if __name__ == "__main__":
     d_list = DoublyLinkedList(1)
     d_list.append(2)
+    d_list.pop()
     d_list.printList()
 
