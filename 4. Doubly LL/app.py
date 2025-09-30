@@ -95,6 +95,7 @@ class DoublyLinkedList:
         new_node = Node(value)
         if self.is_empty():
             self.head = self.tail = new_node
+            self.length +=1
         elif idx == 0:
             return self.prepend(value)
         elif idx == self.length:
@@ -113,23 +114,18 @@ class DoublyLinkedList:
             temp.prev.next = new_node
             new_node.prev = temp.prev
             temp.prev = new_node
-        self.length +=1
+            self.length +=1
         return True
     
     def set(self,value,idx):
         if self.is_empty() or idx < 0 or idx >= self.length:
             return None
         
-        if idx == 0:
-            self.head.value = value
-        elif idx == self.length-1:
-            self.tail.value = value
-        else:
-            temp = self.get(idx)
+        temp = self.get(idx)
+        if temp:
             temp.value = value
-            
-        return True
-
+            return True
+        return False
 
 if __name__ == "__main__":
     d_list = DoublyLinkedList(1)
