@@ -109,11 +109,17 @@ class DoublyLinkedList:
             #     temp = self.tail
             #     for _ in range(self.length-1, idx, -1):
             #         temp = temp.prev
-            temp = self.get(idx)
-            new_node.next = temp
-            temp.prev.next = new_node
-            new_node.prev = temp.prev
-            temp.prev = new_node
+            # temp = self.get(idx)
+            # new_node.next = temp
+            # temp.prev.next = new_node
+            # new_node.prev = temp.prev
+            # temp.prev = new_node
+            after = self.get(idx)
+            before = after.prev
+            before.next = new_node
+            new_node.prev = before
+            after.prev = new_node
+            new_node.next = after
             self.length +=1
         return True
     
@@ -127,6 +133,22 @@ class DoublyLinkedList:
             return True
         return False
 
+    def remove(self, idx):
+        if self.is_empty() or idx < 0 or idx >= self.length:
+            return None
+
+        if idx == 0:
+            return self.pop_first()
+        elif idx == self.length-1:
+            return self.pop()
+        else:
+            before = self.get(idx-1)
+            after = before.next
+            before.next = after.next
+            after.prev = before
+            self.length-=1
+        return True
+
 if __name__ == "__main__":
     d_list = DoublyLinkedList(1)
     d_list.append(2)
@@ -138,6 +160,7 @@ if __name__ == "__main__":
     # print(f"element : {d_list.get(idx).value} at index: {idx}")
     print(f"element : {d_list.insert(8,idx)} at index: {idx}")
     d_list.set(9,1)
+    d_list.remove(1)
     d_list.printList()
     # print(f"Head {d_list.head.value}")
 
